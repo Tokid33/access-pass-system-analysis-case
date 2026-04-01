@@ -1,0 +1,56 @@
+erDiagram
+    USER_ROLE ||--o{ APP_USER : assigns
+    APP_USER ||--o{ REQUEST : creates
+    PASS_TYPE ||--o{ REQUEST : defines
+    STATUS ||--o{ REQUEST : current_status
+    REQUEST ||--o{ REQUEST_STATUS_HISTORY : has
+    APP_USER ||--o{ REQUEST_STATUS_HISTORY : changes
+
+    USER_ROLE {
+        int role_id PK
+        string role_name
+    }
+
+    APP_USER {
+        int user_id PK
+        string full_name
+        string email
+        int role_id FK
+        boolean is_active
+    }
+
+    PASS_TYPE {
+        int pass_type_id PK
+        string pass_type_name
+    }
+
+    STATUS {
+        int status_id PK
+        string status_code
+        string status_name
+    }
+
+    REQUEST {
+        int request_id PK
+        string request_number
+        int pass_type_id FK
+        int initiator_id FK
+        int current_status_id FK
+        string visitor_full_name
+        string visitor_document
+        date visit_date
+        string comment
+        string rejection_reason
+        datetime created_at
+        datetime updated_at
+    }
+
+    REQUEST_STATUS_HISTORY {
+        int history_id PK
+        int request_id FK
+        int from_status_id FK
+        int to_status_id FK
+        int changed_by_user_id FK
+        string comment
+        datetime changed_at
+    }
