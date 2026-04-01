@@ -1,3 +1,8 @@
+# ERD — Pass Request System
+
+Ниже представлена логическая ERD-диаграмма для системы обработки заявок на пропуск.
+
+```mermaid
 erDiagram
     USER_ROLE ||--o{ APP_USER : assigns
     APP_USER ||--o{ REQUEST : creates
