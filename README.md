@@ -167,12 +167,15 @@
 
 ```bash
 docker compose up -d
+
+```
 2. Параметры подключения
 Host: localhost
 Port: 5432
 Database: access_pass_db
 User: analyst
 Password: analyst123
+
 3. Подключение через терминал
 docker exec -it access_pass_postgres psql -U analyst -d access_pass_db
 4. Подключение через DBeaver
@@ -184,15 +187,19 @@ Port: 5432
 Database: access_pass_db
 Username: analyst
 Password: analyst123
-Проверочные SQL-запросы
+
+### Проверочные SQL-запросы
 Посмотреть заявки
+```
 SELECT *
 FROM pass_request
 LIMIT 10;
 Посмотреть статусы
 SELECT *
 FROM status;
+```
 Количество заявок по текущим статусам
+```
 SELECT
     s.status_name,
     COUNT(*) AS request_count
@@ -200,7 +207,9 @@ FROM pass_request pr
 JOIN status s ON pr.current_status_id = s.status_id
 GROUP BY s.status_name
 ORDER BY request_count DESC;
+```
 Отклонённые заявки
+```
 SELECT
     pr.request_number,
     pr.visitor_full_name,
@@ -208,7 +217,9 @@ SELECT
 FROM pass_request pr
 JOIN status s ON pr.current_status_id = s.status_id
 WHERE s.status_code = 'REJECTED';
+```
 История изменений статусов
+```
 SELECT
     pr.request_number,
     s_from.status_name AS from_status,
@@ -219,7 +230,9 @@ JOIN pass_request pr ON rsh.request_id = pr.request_id
 LEFT JOIN status s_from ON rsh.from_status_id = s_from.status_id
 LEFT JOIN status s_to ON rsh.to_status_id = s_to.status_id
 ORDER BY rsh.changed_at DESC;
-Что демонстрирует кейс
+
+```
+### Что демонстрирует кейс
 
 Этот кейс демонстрирует:
 
